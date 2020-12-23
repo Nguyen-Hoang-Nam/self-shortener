@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://unpkg.com/idb/build/iife/index-min.js"></script>
+  <script>
+
+    const queryString = location.search
+    const params = new URLSearchParams(queryString);
+    const id = params.get("id");
+
+    (async () => {
+      const dbName = "shortener";
+      const storeName = "url";
+      const oldVersion = 1;
+      const version = 1;
+
+      // Check browser supports IndexedDB
+      if (!("indexedDB" in window)) {
+        return;
+      }
+
+      // Open DB
+      const db = await idb.openDB(dbName, version, {
+        upgrade(db, oldVersion, version) {
+          // Create object store
+          const store = db.createObjectStore(storeName);
+        },
+      });
+
+      const URLTransaction = db.transaction(storeName, "readwrite");
+      const URLStore = await URLTransaction.objectStore(storeName);
+
+      const url = await URLStore.get(id);
+
+      window.location.replace(url)
+    })();
+  </script>
+</body>
+</html>
