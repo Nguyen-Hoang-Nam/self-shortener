@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "sirv public",
+    "dev": "rollup -c -w --host 0.0.0.0",
+    "start": "sirv public --host 0.0.0.0",
     "validate": "svelte-check"
   },
   "devDependencies": {
@@ -28,7 +28,8 @@
     "comlink": "^4.3.0",
     "idb": "^5.0.8",
     "query-string": "^6.13.7",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "svelte-routing": "^1.5.0"
   },
   "license": "MIT"
 }
